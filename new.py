@@ -6,3 +6,5 @@ options = ['Rock', 'Paper', 'Scissors']
 computer_choice = random.choice(options)
 
 print(f"The computer chose {computer_choice}")
+
+print("Is is working?")
