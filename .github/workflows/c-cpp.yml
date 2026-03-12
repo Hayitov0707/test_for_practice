@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main", "EVA+" ]
+  pull_request:
+    branches: [ "main", "EVA+" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install clang-format
+      run: sudo apt-get update && sudo apt-get install -y clang-format
+
+    - name: make
+      run: make
+
+    - name: check format
+      run: make check-format
+
+    - name: make check (tests)
+      run: make test
