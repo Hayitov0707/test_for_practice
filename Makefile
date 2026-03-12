@@ -35,3 +35,4 @@ test: $(TEST_BINS)
 # Правило для сборки тестов
 %_test: %_test.c
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+ 
