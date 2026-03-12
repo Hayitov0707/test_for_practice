@@ -1,25 +1,19 @@
-name: C/C++ CI
+name: C-CI
 
 on:
   push:
-    branches: [ main, "EVA+" ]
+    branches: [ "main", "EVA+" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y clang-format gcc make
-
-    - name: Check formatting
-      run: make check-format
-
-    - name: Build and run tests
-      run: make test
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang-format gcc make
+      - name: Run checks
+        run: |
+          make check-format
+          make test
