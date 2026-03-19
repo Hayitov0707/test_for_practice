@@ -1,0 +1,29 @@
+name: C Project CI
+
+on:
+  push:
+    branches:
+      - EVA+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install GCC
+        run: sudo apt-get update && sudo apt-get install -y gcc make
+
+      - name: Build all files
+        run: make
+
+      - name: Run tests
+        run: make test
+
+      - name: Clean
+        run: make clean
