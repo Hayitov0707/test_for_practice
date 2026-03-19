@@ -3,7 +3,7 @@ name: C Project CI
 on:
   push:
     branches:
-      - EVA+
+      - "EVA+"
   pull_request:
     branches:
       - main
