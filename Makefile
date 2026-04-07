@@ -6,8 +6,9 @@ TARGETS = Integral List Quadratic_equation Stack
 
 all: $(TARGETS)
 
+# Added -lm here so the linker can find sin()
 Integral: Integral.c
-	$(CC) $(CFLAGS) -o Integral Integral.c
+	$(CC) $(CFLAGS) -o Integral Integral.c -lm
 
 List: List.c
 	$(CC) $(CFLAGS) -o List List.c
@@ -32,5 +33,3 @@ clean:
 	rm -f $(TARGETS)
 
 .PHONY: all test clean
-
-
