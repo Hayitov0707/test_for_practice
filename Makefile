@@ -1,12 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -g
+AR = ar rc
 
-# Все программы
-TARGETS = Integral List Quadratic_equation Stack
+# Старые программы
+OLD_TARGETS = Integral List Quadratic_equation Stack
+# Новая цель для тестов библиотеки
+NEW_TARGETS = add_test
 
-all: $(TARGETS)
+all: $(OLD_TARGETS) $(NEW_TARGETS)
 
-# Added -lm here so the linker can find sin()
+# --- Старые цели (твои программы) ---
+
 Integral: Integral.c
 	$(CC) $(CFLAGS) -o Integral Integral.c -lm
 
@@ -19,6 +23,23 @@ Quadratic_equation: Quadratic_equation.c
 Stack: Stack.c
 	$(CC) $(CFLAGS) -o Stack Stack.c
 
+# --- Новые цели (статическая библиотека и тесты) ---
+
+add.o: add.c add.h
+	$(CC) $(CFLAGS) -c add.c -o add.o
+
+add.a: add.o
+	$(AR) add.a add.o
+
+add_test.o: add_test.c
+	$(CC) $(CFLAGS) -c add_test.c -o add_test.o
+
+add_test: add_test.o add.a
+	$(CC) $(CFLAGS) -static -o add_test add_test.o add.a
+
+# --- Команды проверки и очистки ---
+
+# Запускаем и твои старые тесты, и новый тест библиотеки
 test: all
 	@echo "=== Testing Integral ==="
 	./Integral
@@ -28,8 +49,21 @@ test: all
 	./Stack
 	@echo "=== Testing Quadratic ==="
 	./Quadratic_equation
+	@echo "=== Testing Add (Library) ==="
+	./add_test
 
-clean:
-	rm -f $(TARGETS)
+# Чистка всего: и программ, и объектников, и библиотек
+clear:
+	rm -f $(OLD_TARGETS) $(NEW_TARGETS) *.o *.a
 
-.PHONY: all test clean
+# Совместимость: чтобы старая команда clean тоже работала
+clean: clear
+
+# Форматирование (по твоему новому стилю)
+fmt:
+	clang-format -style=LLVM -i `find . -regex ".+\.[ch]"`
+
+check_fmt:
+	clang-format -style=LLVM -i `find . -regex ".+\.[ch]"` --dry-run --Werror
+
+.PHONY: all test clear clean fmt check_fmt
