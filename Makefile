@@ -4,10 +4,8 @@ AR = ar rc
 
 # Старые программы
 OLD_TARGETS = Integral List Quadratic_equation Stack
-# Новая цель для тестов библиотеки
-NEW_TARGETS = add_test
 
-all: $(OLD_TARGETS) $(NEW_TARGETS)
+all: $(OLD_TARGET)
 
 # --- Старые цели (твои программы) ---
 
