@@ -23,21 +23,6 @@ Quadratic_equation: Quadratic_equation.c
 Stack: Stack.c
 	$(CC) $(CFLAGS) -o Stack Stack.c
 
-# --- Новые цели (статическая библиотека и тесты) ---
-
-add.o: add.c add.h
-	$(CC) $(CFLAGS) -c add.c -o add.o
-
-add.a: add.o
-	$(AR) add.a add.o
-
-add_test.o: add_test.c
-	$(CC) $(CFLAGS) -c add_test.c -o add_test.o
-
-add_test: add_test.o add.a
-	$(CC) $(CFLAGS) -static -o add_test add_test.o add.a
-
-# --- Команды проверки и очистки ---
 
 # Запускаем и твои старые тесты, и новый тест библиотеки
 test: all
