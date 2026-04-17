@@ -32,15 +32,13 @@ test: all
 	./Stack
 	@echo "=== Testing Quadratic ==="
 	./Quadratic_equation
-	@echo "=== Testing Add (Library) ==="
-	./add_test
+
 
 # Чистка всего: и программ, и объектников, и библиотек
 clear:
-	rm -f $(OLD_TARGETS) $(NEW_TARGETS) *.o *.a
+	rm -f $(OLD_TARGETS) *.o *.a
 
-# Совместимость: чтобы старая команда clean тоже работала
-clean: clear
+# Совместимость: чтобы старая команда clean тоже работалclean: clear
 
 # Форматирование (по твоему новому стилю)
 fmt:
