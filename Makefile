@@ -1,50 +1,27 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -g
-AR = ar rc
+LDFLAGS = -lm
 
-# Старые программы
-OLD_TARGETS = Integral List Quadratic_equation Stack
+DIRS = Integral Stack List Quadratic
 
-all: $(OLD_TARGET)
+TARGETS = $(shell find $(DIRS) -name "*.c" -not -name "*_test.c" 2>/dev/null | sed 's/\.c//')
+TEST_TARGETS = $(shell find $(DIRS) -name "*_test.c" 2>/dev/null | sed 's/\.c//')
 
-# --- Старые цели (твои программы) ---
+all: $(TARGETS) $(TEST_TARGETS)
 
-Integral: Integral.c
-	$(CC) $(CFLAGS) -o Integral Integral.c -lm
+%: %.c
+	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
 
-List: List.c
-	$(CC) $(CFLAGS) -o List List.c
-
-Quadratic_equation: Quadratic_equation.c
-	$(CC) $(CFLAGS) -o Quadratic_equation Quadratic_equation.c -lm
-
-Stack: Stack.c
-	$(CC) $(CFLAGS) -o Stack Stack.c
-
-
-# Запускаем и твои старые тесты, и новый тест библиотеки
 test: all
-	@echo "=== Testing Integral ==="
-	./Integral
-	@echo "=== Testing List ==="
-	./List
-	@echo "=== Testing Stack ==="
-	./Stack
-	@echo "=== Testing Quadratic ==="
-	./Quadratic_equation
+	@for test in $(TEST_TARGETS); do \
+		./$$test || exit 1; \
+	done
 
+clean:
+	rm -f $(TARGETS) $(TEST_TARGETS)
+	find . -type f -executable -exec rm -f {} +
 
-# Чистка всего: и программ, и объектников, и библиотек
-clear:
-	rm -f $(OLD_TARGETS) *.o *.a
-
-# Совместимость: чтобы старая команда clean тоже работалclean: clear
-
-# Форматирование (по твоему новому стилю)
 fmt:
-	clang-format -style=LLVM -i `find . -regex ".+\.[ch]"`
+	clang-format -style=LLVM -i $$(find . -name "*.c" -o -name "*.h")
 
-check_fmt:
-	clang-format -style=LLVM -i `find . -regex ".+\.[ch]"` --dry-run --Werror
-
-.PHONY: all test clear clean fmt check_fmt
+.PHONY: all test clean fmt
