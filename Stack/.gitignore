@@ -1,0 +1,44 @@
+# Исполняемые файлы и дампы памяти
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.elf
+
+# Объектные файлы и промежуточные результаты сборки
+*.o
+*.ko
+*.obj
+*.d
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Библиотеки и общие объекты
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Отладочные файлы и прекомпилированные заголовки
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.gch
+*.pch
+
+# Вывод линкера
+*.ilk
+*.map
+*.exp
