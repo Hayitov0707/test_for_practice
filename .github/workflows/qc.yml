@@ -19,11 +19,11 @@ jobs:
 
       - name: Check Formatting
         run: |
-          cd Quadratic
+          cd Quadratic_equation
           make check_fmt
 
       - name: Build and Run Tests
         run: |
-          cd Quadratic
+          cd Quadratic_equation
           make all
           make test
