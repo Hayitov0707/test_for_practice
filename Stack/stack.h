@@ -6,8 +6,8 @@
 #define STACK_MAX 100
 
 typedef struct {
-    int data[STACK_MAX];
-    int top;
+  int data[STACK_MAX];
+  int top;
 } StackArray;
 
 void stack_init(StackArray *s);
@@ -20,4 +20,3 @@ int stack_size(StackArray *s);
 void stack_print(StackArray *s);
 
 #endif
-
